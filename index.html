@@ -1,1125 +1,389 @@
-
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="نفرات برتر پایه دهم دبیرستان پیام غدیر">
-
-  <title>نفرات برتر | دبیرستان پیام غدیر</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #ffffff;
-      --surface: #ffffff;
-      --surface-soft: #f8f9fd;
-      --text: #171b2c;
-      --muted: #777f92;
-      --primary: #4658d9;
-      --primary-soft: #f0f2ff;
-      --border: #e9ebf3;
-      --shadow: 0 18px 60px rgba(38,48,93,.055);
-      --header: rgba(255,255,255,.91);
-    }
-
-    [data-theme="dark"] {
-      color-scheme: dark;
-      --bg: #10121a;
-      --surface: #181b27;
-      --surface-soft: #202434;
-      --text: #f3f4fb;
-      --muted: #a1a8bc;
-      --primary: #a3adff;
-      --primary-soft: #252941;
-      --border: #2b3041;
-      --shadow: 0 18px 60px rgba(0,0,0,.20);
-      --header: rgba(16,18,26,.91);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 90px;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Vazirmatn", Tahoma, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      transition: background .25s, color .25s;
-    }
-
-    button, input {
-      font: inherit;
-    }
-
-    button:focus-visible,
-    input:focus-visible {
-      outline: 3px solid var(--primary);
-      outline-offset: 4px;
-    }
-
-    ::selection {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    [hidden] {
-      display: none !important;
-    }
-
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      isolation: isolate;
-      overflow: clip;
-    }
-
-    /* پس‌زمینه */
-
-    .ambient {
-      position: absolute;
-      z-index: -1;
-      pointer-events: none;
-      inset: 0 0 auto;
-      height: 690px;
-      background:
-        radial-gradient(ellipse at 50% 0%,
-          rgba(92,112,240,.075), transparent 65%),
-        linear-gradient(to bottom, var(--surface-soft), var(--bg));
-    }
-
-    .ambient::before {
-      content: "";
-      position: absolute;
-      width: 460px;
-      height: 460px;
-      top: -300px;
-      right: -140px;
-      border: 1px solid rgba(93,110,226,.10);
-      border-radius: 50%;
-      box-shadow:
-        0 0 0 45px rgba(93,110,226,.025),
-        0 0 0 95px rgba(93,110,226,.018);
-    }
-
-    [data-theme="dark"] .ambient {
-      background:
-        radial-gradient(ellipse at 50% 0%,
-          rgba(97,111,235,.12), transparent 65%),
-        linear-gradient(to bottom, #151827, var(--bg));
-    }
-
-    /* سربرگ ساده و رسمی */
-
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      border-bottom: 1px solid var(--border);
-      background: var(--header);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .header-inner {
-      width: min(1120px, calc(100% - 44px));
-      min-height: 76px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      color: var(--text);
-      text-decoration: none;
-      min-width: 0;
-    }
-
-    /* نشان هندسی؛ بدون حرف یا لوگوی ساختگی */
-
-    .brand-mark {
-      position: relative;
-      width: 37px;
-      height: 37px;
-      flex: 0 0 37px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(70,88,217,.22);
-      border-radius: 12px;
-      background: var(--primary-soft);
-      transform: rotate(-5deg);
-    }
-
-    .brand-mark::before {
-      content: "";
-      width: 13px;
-      height: 13px;
-      border: 2px solid var(--primary);
-      border-radius: 4px;
-      transform: rotate(45deg);
-    }
-
-    .brand-mark::after {
-      content: "";
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--primary);
-    }
-
-    .brand-copy {
-      min-width: 0;
-    }
-
-    .brand-title {
-      margin: 0;
-      font-size: 13px;
-      font-weight: 850;
-      letter-spacing: -.25px;
-      line-height: 1.8;
-    }
-
-    .brand-subtitle {
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 500;
-      line-height: 1.8;
-    }
-
-    .theme-toggle {
-      width: 43px;
-      height: 43px;
-      flex: 0 0 43px;
-      display: grid;
-      place-items: center;
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      cursor: pointer;
-      transition: .22s ease;
-    }
-
-    .theme-toggle:hover {
-      color: var(--primary);
-      background: var(--primary-soft);
-      transform: translateY(-2px);
-    }
-
-    .theme-toggle svg {
-      width: 21px;
-      height: 21px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    /* محتوای اصلی */
-
-    main {
-      flex: 1;
-    }
-
-    .container {
-      width: min(1000px, calc(100% - 44px));
-      margin: auto;
-    }
-
-    .hero {
-      padding: 91px 0 56px;
-      text-align: center;
-      animation: rise .7s ease both;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 8px 14px;
-      margin-bottom: 24px;
-      border: 1px solid #e1e5ff;
-      border-radius: 100px;
-      color: #485bd4;
-      background: rgba(240,242,255,.85);
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    [data-theme="dark"] .eyebrow {
-      border-color: var(--border);
-      color: var(--primary);
-      background: var(--primary-soft);
-    }
-
-    .eyebrow-dot {
-      width: 7px;
-      height: 7px;
-      background: #6476ef;
-      border-radius: 50%;
-      box-shadow: 0 0 0 4px rgba(100,118,239,.12);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(34px, 5.4vw, 57px);
-      font-weight: 900;
-      letter-spacing: -2px;
-      line-height: 1.55;
-    }
-
-    .gradient-text {
-      color: var(--primary);
-      background: linear-gradient(100deg, #4358d9, #7886f6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    [data-theme="dark"] .gradient-text {
-      background: linear-gradient(100deg, #a1adff, #c2c8ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
-
-    .hero-description {
-      max-width: 510px;
-      margin: 19px auto 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 2.3;
-    }
-
-    .hero-rule {
-      width: 54px;
-      height: 4px;
-      margin: 29px auto 0;
-      border-radius: 10px;
-      background: linear-gradient(90deg, #8793f7, #4658d9);
-    }
-
-    /* نفرات برتر */
-
-    .ranking {
-      padding: 5px 0 95px;
-      animation: rise .8s .1s ease both;
-    }
-
-    .section-heading {
-      margin-bottom: 22px;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 850;
-      letter-spacing: -.65px;
-      line-height: 1.9;
-    }
-
-    .section-subtitle {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 2;
-    }
-
-    /* کارت به‌زودی */
-
-    .empty-wrap {
-      display: flex;
-      justify-content: center;
-      padding: 14px 0 24px;
-    }
-
-    .empty-card {
-      position: relative;
-      isolation: isolate;
-      width: min(100%, 390px);
-      aspect-ratio: 1 / 1;
-      padding: 34px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      box-shadow: var(--shadow);
-      transition: transform .3s ease, border-color .3s ease;
-    }
-
-    .empty-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(86,103,224,.35);
-    }
-
-    .empty-card::before,
-    .empty-card::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      pointer-events: none;
-      border-radius: 50%;
-    }
-
-    .empty-card::before {
-      width: 270px;
-      height: 270px;
-      top: -175px;
-      right: -125px;
-      background: rgba(92,110,237,.10);
-      box-shadow: 0 0 0 28px rgba(92,110,237,.035);
-    }
-
-    .empty-card::after {
-      width: 220px;
-      height: 220px;
-      bottom: -165px;
-      left: -110px;
-      background: rgba(151,117,239,.08);
-    }
-
-    .trophy-box {
-      position: relative;
-      width: 83px;
-      height: 83px;
-      margin-bottom: 25px;
-      display: grid;
-      place-items: center;
-      color: var(--primary);
-      background: var(--primary-soft);
-      border: 1px solid rgba(91,107,224,.16);
-      border-radius: 27px;
-      animation: float 4s ease-in-out infinite;
-    }
-
-    .trophy-box svg {
-      width: 40px;
-      height: 40px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.6;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .empty-title {
-      margin: 0;
-      font-size: clamp(17px, 2.4vw, 20px);
-      font-weight: 850;
-      line-height: 2;
-      letter-spacing: -.5px;
-    }
-
-    .empty-description {
-      max-width: 265px;
-      margin: 11px 0 0;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 2.2;
-    }
-
-    .coming-soon {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin-top: 24px;
-      padding: 10px 16px;
-      color: var(--primary);
-      background: var(--primary-soft);
-      border: 1px solid rgba(91,107,224,.16);
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .coming-dot {
-      width: 6px;
-      height: 6px;
-      flex: 0 0 6px;
-      border-radius: 50%;
-      background: var(--primary);
-      animation: blink 1.8s ease-in-out infinite;
-    }
-
-    .progress-decoration {
-      display: flex;
-      gap: 5px;
-      margin-top: 23px;
-      direction: ltr;
-    }
-
-    .progress-decoration span {
-      width: 20px;
-      height: 3px;
-      border-radius: 10px;
-      background: var(--border);
-    }
-
-    .progress-decoration span:first-child {
-      background: var(--primary);
-    }
-
-    /* کارت دانش‌آموزان */
-
-    .search-area {
-      margin: 0 0 20px;
-    }
-
-    .search-box {
-      position: relative;
-      width: min(100%, 400px);
-    }
-
-    .search-box svg {
-      position: absolute;
-      top: 50%;
-      right: 15px;
-      transform: translateY(-50%);
-      width: 19px;
-      height: 19px;
-      fill: none;
-      stroke: var(--muted);
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      pointer-events: none;
-    }
-
-    .search-input {
-      width: 100%;
-      min-height: 49px;
-      padding: 12px 44px 12px 14px;
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      outline: none;
-      font-size: 13px;
-      transition: border-color .2s, box-shadow .2s;
-    }
-
-    .search-input::placeholder {
-      color: var(--muted);
-    }
-
-    .search-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px var(--primary-soft);
-    }
-
-    .students-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .student-card {
-      min-width: 0;
-      padding: 12px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 23px;
-      box-shadow: var(--shadow);
-      animation: rise .4s ease both;
-      transition: transform .25s, border-color .25s;
-    }
-
-    .student-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(86,103,224,.35);
-    }
-
-    .student-photo-wrap {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      border-radius: 16px;
-      background: var(--surface-soft);
-    }
-
-    .student-photo {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      transition: transform .4s;
-    }
-
-    .student-card:hover .student-photo {
-      transform: scale(1.04);
-    }
-
-    .student-rank {
-      position: absolute;
-      top: 11px;
-      right: 11px;
-      padding: 8px 11px;
-      color: white;
-      background: rgba(25,31,54,.8);
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 800;
-      backdrop-filter: blur(10px);
-    }
-
-    .student-info {
-      padding: 15px 5px 6px;
-    }
-
-    .student-name {
-      margin: 0;
-      overflow-wrap: anywhere;
-      font-size: 14px;
-      font-weight: 800;
-      line-height: 2;
-    }
-
-    .student-average {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .student-average strong {
-      color: var(--primary);
-      font-size: 14px;
-      direction: ltr;
-    }
-
-    .no-results {
-      grid-column: 1 / -1;
-      padding: 25px;
-      text-align: center;
-      color: var(--muted);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      font-size: 13px;
-    }
-
-    /* پابرگ */
-
-    .footer {
-      margin-top: auto;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-inner {
-      width: min(1000px, calc(100% - 44px));
-      min-height: 72px;
-      margin: auto;
-      display: grid;
-      place-items: center;
-      text-align: center;
-    }
-
-    .copyright {
-      margin: 0;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 2;
-    }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(17px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .35; }
-    }
-
-    @media (max-width: 760px) {
-      .hero { padding-top: 74px; }
-
-      .students-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .header-inner {
-        width: calc(100% - 30px);
-        min-height: 68px;
-      }
-
-      .container {
-        width: calc(100% - 30px);
-      }
-
-      .brand-mark {
-        width: 34px;
-        height: 34px;
-        flex-basis: 34px;
-        border-radius: 11px;
-      }
-
-      .brand-title { font-size: 12px; }
-
-      .hero { padding: 65px 0 43px; }
-
-      .eyebrow {
-        margin-bottom: 20px;
-        font-size: 10px;
-      }
-
-      h1 {
-        font-size: clamp(31px, 8vw, 40px);
-        letter-spacing: -1.2px;
-        line-height: 1.7;
-      }
-
-      .hero-description {
-        max-width: 345px;
-        margin-top: 14px;
-        font-size: 12px;
-      }
-
-      .hero-rule { margin-top: 23px; }
-
-      .ranking { padding-bottom: 58px; }
-
-      .section-title { font-size: 18px; }
-
-      .section-subtitle { font-size: 11px; }
-
-      .empty-card {
-        width: min(100%, 340px);
-        padding: 24px;
-        border-radius: 25px;
-      }
-
-      .trophy-box {
-        width: 72px;
-        height: 72px;
-        border-radius: 23px;
-        margin-bottom: 21px;
-      }
-
-      .trophy-box svg {
-        width: 35px;
-        height: 35px;
-      }
-
-      .empty-title { font-size: 17px; }
-
-      .empty-description { font-size: 10px; }
-
-      .student-card {
-        padding: 8px;
-        border-radius: 17px;
-      }
-
-      .student-photo-wrap { border-radius: 12px; }
-
-      .student-info { padding: 11px 4px 4px; }
-
-      .student-name { font-size: 12px; }
-
-      .student-average { font-size: 10px; }
-
-      .student-average strong { font-size: 12px; }
-
-      .footer-inner {
-        width: calc(100% - 30px);
-        min-height: 65px;
-      }
-
-      .copyright { font-size: 10px; }
-    }
-
-    @media (max-width: 350px) {
-      .students-grid { gap: 9px; }
-      .student-card { padding: 6px; }
-      .empty-card { padding: 18px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#EDF0F6" id="pgMeta">
+<title>نتایج کارنامه دو ماهه اول | دبیرستان پیام غدیر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<script>
+/* تم را پیش از رندر اعمال می‌کند تا چشمک‌زدن نداشته باشیم */
+(function(){var t;try{t=localStorage.getItem('pg-theme')}catch(e){}
+if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.dataset.theme=t;})();
+</script>
+<style>
+/* ============ توکن‌های طراحی ============ */
+:root{
+  --font:'Vazirmatn',Tahoma,'Segoe UI',system-ui,sans-serif;
+  --cw:min(clamp(216px,64vw,268px),max(150px,38vh)); /* عرض کارت */
+  --ease:cubic-bezier(.22,.9,.3,1);
+}
+:root[data-theme=light]{
+  --bg:#EDF0F6;--bg2:#F8F9FC;--ink:#141B34;--mute:#5D6785;--card:#fff;--line:#D6DCEA;
+  --shadow:0 20px 40px -22px rgba(20,27,52,.45);--shadow-a:0 28px 50px -20px rgba(20,27,52,.5);
+  --glow1:rgba(212,166,58,.20);--glow2:rgba(60,90,200,.12);--field:#fff;
+  --g1:#B8861B;--g2:#7A560F;--s1:#7C8799;--s2:#4F5A6C;--b1:#B06A32;--b2:#7B4119;
+}
+:root[data-theme=dark]{
+  --bg:#080C1A;--bg2:#0E1530;--ink:#EEF1FA;--mute:#9AA6C6;--card:#111a38;--line:#27325E;
+  --shadow:0 24px 46px -22px #000;--shadow-a:0 30px 60px -20px #000;
+  --glow1:rgba(226,185,79,.16);--glow2:rgba(70,100,230,.18);--field:#0E1530;
+  --g1:#F3D27A;--g2:#C99A2E;--s1:#E3E8F0;--s2:#A9B4C4;--b1:#EBAE7C;--b2:#C0743A;
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--ink);min-height:100vh;min-height:100dvh;
+  overflow-x:hidden;display:flex;flex-direction:column;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+body::before{ /* نور پس‌زمینه، ثابت و سبک */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:radial-gradient(60% 40% at 50% 0%,var(--glow1),transparent 70%),
+             radial-gradient(70% 45% at 50% 100%,var(--glow2),transparent 70%),var(--bg);
+}
+button,input{font:inherit;color:inherit}
+
+/* ============ سربرگ ============ */
+.pg-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px 6px;max-width:960px;width:100%;margin:0 auto}
+.pg-brand{position:relative;padding-inline-start:12px}
+.pg-brand::before{content:"";position:absolute;inset-block:3px;inset-inline-start:0;width:3px;border-radius:3px;background:linear-gradient(var(--g1),var(--g2))}
+.pg-brand strong{display:block;font-size:clamp(17px,4.6vw,21px);font-weight:800;line-height:1.5}
+.pg-brand span{display:block;font-size:clamp(11.5px,3.2vw,13px);color:var(--mute);line-height:1.6}
+
+.pg-theme{position:relative;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow);-webkit-tap-highlight-color:transparent;transition:transform .25s var(--ease)}
+.pg-theme:active{transform:scale(.92)}
+.pg-theme svg{grid-area:1/1;width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .6s var(--ease),opacity .35s}
+.pg-theme .moon{opacity:0;transform:rotate(-90deg) scale(.4)}
+[data-theme=dark] .pg-theme .sun{opacity:0;transform:rotate(90deg) scale(.4)}
+[data-theme=dark] .pg-theme .moon{opacity:1;transform:none}
+.pg-theme .sun{color:#C48A12}.pg-theme .moon{color:#F3D27A}
+
+/* ============ عنوان ============ */
+.pg-hero{text-align:center;padding:22px 20px 6px;animation:pgRise .8s var(--ease) both}
+.pg-hero h1{font-size:clamp(25px,7.4vw,40px);font-weight:800;line-height:1.4}
+.pg-hero .pg-sub{margin-top:6px;font-size:clamp(13.5px,3.8vw,16px);color:var(--mute);font-weight:600}
+.pg-hero .pg-note{margin:8px auto 0;max-width:34ch;font-size:12.5px;line-height:1.9;color:var(--mute)}
+@keyframes pgRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ============ جست‌وجو ============ */
+.pg-tools{display:flex;align-items:center;gap:10px;justify-content:center;padding:14px 18px 0;max-width:460px;width:100%;margin:0 auto}
+.pg-search{position:relative;flex:1;min-width:0}
+.pg-search svg{position:absolute;inset-inline-start:13px;top:50%;translate:0 -50%;width:18px;height:18px;fill:none;stroke:var(--mute);stroke-width:2;stroke-linecap:round;pointer-events:none}
+.pg-search input{width:100%;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--field);padding-inline:40px 14px;font-size:16px;outline:none;transition:border-color .25s,box-shadow .25s;-webkit-appearance:none;appearance:none}
+.pg-search input::placeholder{color:var(--mute)}
+.pg-search input:focus{border-color:var(--g2);box-shadow:0 0 0 3px var(--glow1)}
+.pg-count{flex:none;font-size:12.5px;color:var(--mute);padding:0 4px;white-space:nowrap}
+
+/* ============ کاروسل سه‌بعدی ============ */
+.pg-stage{
+  position:relative;direction:ltr;margin-top:8px;width:100%;
+  height:calc(var(--cw)*1.3 + 56px);perspective:1100px;overflow:hidden;
+  touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;
+}
+.pg-stage.is-drag{cursor:grabbing}
+.pg-card{
+  position:absolute;top:28px;left:50%;margin-left:calc(var(--cw)/-2);
+  width:var(--cw);height:calc(var(--cw)*1.3);direction:rtl;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:calc(var(--cw)*.075);border-radius:22px;border:1.5px solid transparent;overflow:hidden;
+  background:linear-gradient(var(--tint,transparent),transparent 58%) padding-box,
+             linear-gradient(var(--card),var(--card)) padding-box,
+             linear-gradient(135deg,var(--r1),var(--r2)) border-box;
+  box-shadow:var(--shadow);will-change:transform,opacity;
+  transition:transform .75s var(--ease),opacity .5s,box-shadow .5s;
+}
+.pg-stage.is-drag .pg-card{transition:none}
+.pg-card.is-active{box-shadow:var(--shadow-a)}
+.pg-card.t0{--r1:var(--line);--r2:var(--line);--x1:var(--ink);--x2:var(--ink)}
+.pg-card.t1{--r1:#F1D27A;--r2:#A87B1F;--tint:rgba(226,185,79,.17);--x1:var(--g1);--x2:var(--g2);--m1:#F6DE92;--m2:#B88A26}
+.pg-card.t2{--r1:#DDE3EC;--r2:#8D9AAC;--tint:rgba(170,182,200,.17);--x1:var(--s1);--x2:var(--s2);--m1:#E6EBF2;--m2:#9AA7B9}
+.pg-card.t3{--r1:#E7A877;--r2:#9A5A2B;--tint:rgba(201,125,70,.16);--x1:var(--b1);--x2:var(--b2);--m1:#EDB887;--m2:#A8622F}
+.pg-card.t1::after{ /* تنها جلوه متحرک: برق ملایم رتبه اول */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.4) 50%,transparent 58%) 130% 0/250% 100% no-repeat;
+  mix-blend-mode:soft-light;animation:pgSheen 6.5s 1.6s infinite;
+}
+@keyframes pgSheen{0%{background-position:130% 0}30%,100%{background-position:-130% 0}}
+
+.pg-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pg-class{font-size:clamp(11.5px,calc(var(--cw)*.05),13px);color:var(--mute)}
+.pg-medal{width:calc(var(--cw)*.14);height:calc(var(--cw)*.14);border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:calc(var(--cw)*.07);
+  border:1px solid var(--line);color:var(--mute);flex:none}
+.t1 .pg-medal,.t2 .pg-medal,.t3 .pg-medal{border:0;color:#1d1606;background:linear-gradient(135deg,var(--m1),var(--m2));box-shadow:0 4px 10px -4px rgba(0,0,0,.45)}
+.pg-name{text-align:center;font-weight:800;line-height:1.7;font-size:clamp(16px,calc(var(--cw)*.088),23px);text-wrap:balance;overflow-wrap:anywhere}
+.pg-avg{text-align:center}
+.pg-avg small{display:block;font-size:clamp(11.5px,calc(var(--cw)*.048),13px);color:var(--mute)}
+.pg-avg strong{display:block;font-size:calc(var(--cw)*.2);font-weight:800;line-height:1.25;letter-spacing:.01em;
+  background:linear-gradient(180deg,var(--x1),var(--x2));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.pg-rank{display:flex;align-items:center;justify-content:center;gap:8px;border-top:1px solid var(--line);padding-top:calc(var(--cw)*.05);
+  font-size:clamp(12.5px,calc(var(--cw)*.054),14px);font-weight:600}
+.pg-tie{font-size:11px;font-weight:600;color:var(--mute);border:1px solid var(--line);border-radius:10px;padding:0 8px;line-height:1.7}
+
+/* ============ کنترل‌ها ============ */
+.pg-nav{display:flex;align-items:center;justify-content:center;gap:14px;padding:4px 18px 22px}
+.pg-arrow{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow);transition:transform .2s,opacity .25s;-webkit-tap-highlight-color:transparent}
+.pg-arrow:active{transform:scale(.92)}
+.pg-arrow:disabled{opacity:.35;cursor:default}
+.pg-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pg-dots{display:flex;align-items:center;gap:2px}
+.pg-dot{width:22px;height:30px;border:0;background:none;cursor:pointer;display:grid;place-items:center;-webkit-tap-highlight-color:transparent}
+.pg-dot::before{content:"";width:7px;height:7px;border-radius:7px;background:var(--line);transition:width .4s var(--ease),background .3s}
+.pg-dot[aria-current=true]::before{width:20px;background:linear-gradient(90deg,var(--g1),var(--g2))}
+
+.pg-empty{display:none;text-align:center;padding:56px 24px;color:var(--mute);line-height:2;font-size:14.5px}
+.pg-empty b{display:block;color:var(--ink);font-size:17px;margin-bottom:2px}
+body.is-empty .pg-empty{display:block}
+body.is-empty .pg-stage,body.is-empty .pg-nav{display:none}
+
+/* ============ پنجره کوچک ============ */
+.pg-pop{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px;
+  background:rgba(8,12,26,.38);-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);
+  opacity:0;visibility:hidden;transition:opacity .35s,backdrop-filter .35s,-webkit-backdrop-filter .35s,visibility 0s .35s}
+.pg-pop.is-open{opacity:1;visibility:visible;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);transition-delay:0s}
+.pg-pop__box{width:min(100%,340px);text-align:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 22px 18px;box-shadow:var(--shadow-a);
+  transform:translateY(14px) scale(.92);opacity:0;filter:blur(6px);transition:transform .45s var(--ease),opacity .35s,filter .35s}
+.pg-pop.is-open .pg-pop__box{transform:none;opacity:1;filter:none}
+.pg-pop__box p{font-size:14.5px;line-height:2.15}
+.pg-pop__box button{margin-top:16px;height:40px;padding:0 26px;border-radius:20px;border:1px solid var(--line);background:var(--bg2);cursor:pointer;font-size:14px;font-weight:600}
+.pg-pop__box button:focus-visible,.pg-arrow:focus-visible,.pg-dot:focus-visible,.pg-theme:focus-visible{outline:2px solid var(--g2);outline-offset:2px}
+
+/* ============ تغییر تم (انتشار دایره‌ای) ============ */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2}
+html.pg-fade *{transition:background-color .45s,color .45s,border-color .45s!important}
+
+/* ============ واکنش‌گرایی ============ */
+@media (min-width:700px){.pg-header{padding-top:22px}.pg-hero{padding-top:34px}}
+@media (max-height:500px) and (orientation:landscape){
+  .pg-header{padding-top:8px}.pg-hero{padding-top:6px}.pg-hero .pg-note{display:none}
+  .pg-hero h1{font-size:22px}.pg-tools{padding-top:8px}.pg-nav{padding-bottom:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+}
+</style>
 </head>
-
 <body>
-  <div class="page">
 
-    <div class="ambient" aria-hidden="true"></div>
+<header class="pg-header">
+  <div class="pg-brand">
+    <strong>دبیرستان پیام غدیر</strong>
+    <span>سایت اختصاصی نمرات پایه دهم</span>
+  </div>
+  <button class="pg-theme" id="pgTheme" type="button" aria-label="تغییر تم">
+    <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    <svg class="moon" viewBox="0 0 24 24"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
+  </button>
+</header>
 
-    <header class="header">
-      <div class="header-inner">
+<main>
+  <section class="pg-hero">
+    <h1>نتایج کارنامه دو ماهه اول</h1>
+    <p class="pg-sub">پایه دهم | دبیرستان پیام غدیر</p>
+    <p class="pg-note">این رتبه‌ها فقط بر اساس نتایج کارنامه دو ماهه اول است و رتبه‌بندی کلی یا دائمی نیست.</p>
+  </section>
 
-        <a class="brand" href="#" aria-label="صفحه اصلی">
-          <span class="brand-mark" aria-hidden="true"></span>
-
-          <span class="brand-copy">
-            <p class="brand-title">دبیرستان پیام غدیر</p>
-            <p class="brand-subtitle">پایگاه نفرات برتر</p>
-          </span>
-        </a>
-
-        <button
-          class="theme-toggle"
-          id="themeToggle"
-          type="button"
-          aria-label="فعال کردن تم تاریک"
-          title="تغییر تم"
-        >
-          <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path>
-          </svg>
-        </button>
-
-      </div>
-    </header>
-
-    <main>
-
-      <section class="hero">
-        <div class="container">
-
-          <div class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            <span>پایه دهم · نسخه آزمایشی</span>
-          </div>
-
-          <h1>
-            اینجا جای
-            <span class="gradient-text">بهترین‌هاست</span>
-          </h1>
-
-          <p class="hero-description">
-            تلاش‌های بزرگ، شایسته دیده شدن‌اند.
-            اینجا قراره از دانش‌آموزانی که با پشتکارشون
-            پیشرفت می‌کنن و به موفقیت می‌رسن، تقدیر کنیم.
-          </p>
-
-          <div class="hero-rule"></div>
-
-        </div>
-      </section>
-
-      <section class="ranking" aria-labelledby="rankingTitle">
-        <div class="container">
-
-          <div class="section-heading">
-            <h2 class="section-title" id="rankingTitle">
-              نفرات برتر پایه دهم
-            </h2>
-            <p class="section-subtitle">
-              معرفی دانش‌آموزان برگزیده پایه
-            </p>
-          </div>
-
-          <div class="search-area" id="searchArea" hidden>
-            <div class="search-box">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="11" cy="11" r="7"></circle>
-                <path d="m20 20-4-4"></path>
-              </svg>
-
-              <input
-                class="search-input"
-                id="searchInput"
-                type="search"
-                placeholder="جست‌وجوی نام دانش‌آموز..."
-                autocomplete="off"
-                aria-label="جست‌وجوی نام دانش‌آموز"
-              >
-            </div>
-          </div>
-
-          <div class="empty-wrap" id="emptyState">
-            <div class="empty-card">
-
-              <div class="trophy-box" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M8 21h8"></path>
-                  <path d="M12 17v4"></path>
-                  <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"></path>
-                  <path d="M7 6H4v2a4 4 0 0 0 4 4"></path>
-                  <path d="M17 6h3v2a4 4 0 0 1-4 4"></path>
-                </svg>
-              </div>
-
-              <h3 class="empty-title">
-                جای بهترین‌ها اینجاست!
-              </h3>
-
-              <p class="empty-description">
-                اسامی و تصاویر دانش‌آموزان برتر به‌زودی
-                در همین بخش قرار می‌گیرند.
-              </p>
-
-              <div class="coming-soon">
-                <span class="coming-dot"></span>
-                <span>به‌زودی، با افتخار معرفی می‌کنیم</span>
-              </div>
-
-              <div class="progress-decoration" aria-hidden="true">
-                <span></span><span></span><span></span>
-                <span></span><span></span>
-              </div>
-
-            </div>
-          </div>
-
-          <div
-            class="students-grid"
-            id="studentsGrid"
-            aria-live="polite"
-          ></div>
-
-        </div>
-      </section>
-
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        <p class="copyright">
-          © دبیرستان پیام غدیر | تمامی حقوق محفوظ است
-        </p>
-      </div>
-    </footer>
-
+  <div class="pg-tools">
+    <label class="pg-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="pgSearch" type="search" placeholder="جست‌وجوی نام دانش‌آموز" autocomplete="off" enterkeyhint="search" aria-label="جست‌وجوی نام دانش‌آموز">
+    </label>
+    <span class="pg-count" id="pgCount" aria-live="polite"></span>
   </div>
 
-  <script>
-    /*
-      برای افزودن دانش‌آموز:
+  <div class="pg-stage" id="pgStage" role="group" aria-label="رتبه‌بندی دانش‌آموزان"></div>
 
-      {
-        rank: 1,
-        name: "نام و نام خانوادگی",
-        average: "19.95",
-        photo: "images/student1.jpg"
-      }
-    */
+  <nav class="pg-nav" id="pgNav" aria-label="پیمایش">
+    <button class="pg-arrow" id="pgPrev" type="button" aria-label="قبلی"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="pg-dots" id="pgDots"></div>
+    <button class="pg-arrow" id="pgNext" type="button" aria-label="بعدی"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+  </nav>
 
-    const students = [];
+  <div class="pg-empty">
+    <b>نتیجه‌ای پیدا نشد</b>
+    نام را کوتاه‌تر یا با املای دیگری بنویسید.
+  </div>
+</main>
 
-    const root = document.documentElement;
-    const themeToggle = document.getElementById("themeToggle");
-    const themeIcon = document.getElementById("themeIcon");
-    const themeMeta = document.querySelector('meta[name="theme-color"]');
+<div class="pg-pop" id="pgPop" aria-hidden="true">
+  <div class="pg-pop__box" role="dialog" aria-modal="true" aria-label="پیام">
+    <p>احتمالاً برای کارنامه بعدی، در صورت صلاحدید استاد صفرخانیان، می‌توانید ریزنمرات نفرات برتر را مشاهده کنید.</p>
+    <button type="button" id="pgPopClose">بستن</button>
+  </div>
+</div>
 
-    const emptyState = document.getElementById("emptyState");
-    const studentsGrid = document.getElementById("studentsGrid");
-    const searchArea = document.getElementById("searchArea");
-    const searchInput = document.getElementById("searchInput");
+<script>
+(function(){
+'use strict';
 
-    const sunIcon = `
-      <circle cx="12" cy="12" r="4"></circle>
-      <path d="M12 2v2"></path>
-      <path d="M12 20v2"></path>
-      <path d="m4.93 4.93 1.42 1.42"></path>
-      <path d="m17.65 17.65 1.42 1.42"></path>
-      <path d="M2 12h2"></path>
-      <path d="M20 12h2"></path>
-      <path d="m6.35 17.65-1.42 1.42"></path>
-      <path d="m19.07 4.93-1.42 1.42"></path>
-    `;
+/* ====== داده‌ها ======
+   برای ویرایش: فقط همین آرایه را عوض کنید. معدل به‌صورت متن نگهداری می‌شود تا هرگز گرد/بازمحاسبه نشود.
+   className را بعداً می‌توانید برای هر فرد (مثلاً «۱۰۲») جایگزین کنید. */
+var students=[
+  {id:1,name:'طه حاجی شریفی',     className:'پایه دهم',rank:1,finalAverage:'19.41'},
+  {id:2,name:'سید مصطفی درودگر',  className:'پایه دهم',rank:2,finalAverage:'19.29'},
+  {id:3,name:'مهدی پرستش',        className:'پایه دهم',rank:3,finalAverage:'19.01'},
+  {id:4,name:'محمدطه حاجی حسینی', className:'پایه دهم',rank:4,finalAverage:'18.64'},
+  {id:5,name:'امیرحسین نظری',     className:'پایه دهم',rank:4,finalAverage:'18.64'},
+  {id:6,name:'ماهان ناظریه',      className:'پایه دهم',rank:6,finalAverage:'18.03'},
+  {id:7,name:'حسین اسدی',         className:'پایه دهم',rank:7,finalAverage:'18.01'}
+];
 
-    const moonIcon = `
-      <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path>
-    `;
+var FA='۰۱۲۳۴۵۶۷۸۹',ORD=['','اول','دوم','سوم','چهارم','پنجم','ششم','هفتم','هشتم','نهم','دهم'];
+var fa=function(v){return String(v).replace(/\d/g,function(d){return FA[d]})};
+var rankWord=function(r){return ORD[r]||fa(r)};
+var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var norm=function(s){return String(s).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\u200c\s]+/g,' ').trim().toLowerCase()};
+var $=function(id){return document.getElementById(id)};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /*
-      در اولین بازدید، تم سفید است.
-      اگر کاربر قبلاً تمی انتخاب کرده باشد،
-      همان انتخاب در بازدید بعدی حفظ می‌شود.
-    */
+var stage=$('pgStage'),dotsEl=$('pgDots'),prevB=$('pgPrev'),nextB=$('pgNext'),countEl=$('pgCount');
+var view=students.slice(),active=0,dx=0,drag=null,lastTouch=0,hover=false,popOpen=false,first=true;
 
-    function readTheme() {
-      try {
-        const saved = localStorage.getItem("payam-ghadir-theme");
+/* ====== ساخت کارت‌ها ====== */
+function build(){
+  var tie=function(r){return students.filter(function(s){return s.rank===r}).length>1};
+  stage.innerHTML=view.map(function(s){
+    var t=s.rank<=3?s.rank:0;
+    return '<article class="pg-card t'+t+'">'+
+      '<div class="pg-top"><span class="pg-class">کلاس: '+esc(s.className)+'</span><span class="pg-medal">'+fa(s.rank)+'</span></div>'+
+      '<h2 class="pg-name">'+esc(s.name)+'</h2>'+
+      '<div class="pg-avg"><small>معدل نهایی</small><strong>'+fa(s.finalAverage)+'</strong></div>'+
+      '<div class="pg-rank">رتبه '+rankWord(s.rank)+(tie(s.rank)?'<span class="pg-tie">مشترک</span>':'')+'</div>'+
+    '</article>';
+  }).join('');
+  dotsEl.innerHTML=view.map(function(_,i){return '<button class="pg-dot" type="button" data-i="'+i+'" aria-label="نمایش کارت '+fa(i+1)+'"></button>'}).join('');
+  countEl.textContent=view.length===students.length?fa(students.length)+' نفر':fa(view.length)+' از '+fa(students.length)+' نفر';
+  document.body.classList.toggle('is-empty',!view.length);
+}
 
-        if (saved === "light" || saved === "dark") {
-          return saved;
-        }
-      } catch (error) {
-        // در صورت غیرفعال بودن ذخیره‌سازی، تم سفید می‌ماند.
-      }
-
-      return "light";
+/* ====== چیدمان سه‌بعدی ====== */
+function layout(intro){
+  var cards=stage.children;if(!cards.length)return;
+  var step=cards[0].offsetWidth*.6;
+  for(var i=0;i<cards.length;i++){
+    var c=cards[i],o=i-active-(dx/step),a=Math.abs(o),ac=Math.min(a,2.5);
+    if(intro){
+      c.style.transform='translate3d(0,0,-260px) scale(.7)';c.style.opacity=0;
+    }else{
+      var rot=reduce?0:Math.max(-1,Math.min(1,o))*34;
+      c.style.transform='translate3d('+(-o*step)+'px,0,'+(-ac*110)+'px) rotateY('+rot+'deg) scale('+(1-ac*.06)+')';
+      c.style.opacity=a>2.2?0:Math.max(0,1-a*.27);
     }
+    c.style.zIndex=100-Math.round(a*10);
+    c.style.visibility=a>2.4?'hidden':'visible';
+    c.classList.toggle('is-active',i===active);
+  }
+  var d=dotsEl.children;
+  for(var j=0;j<d.length;j++){d[j].setAttribute('aria-current',j===active?'true':'false')}
+  prevB.disabled=active<=0;nextB.disabled=active>=view.length-1;
+}
+function show(){ /* ورود هماهنگ کارت‌ها: تنها لحظه ورود اصلی صفحه */
+  layout(true);void stage.offsetWidth;
+  var cs=stage.children;
+  for(var i=0;i<cs.length;i++){cs[i].style.transitionDelay=(first&&!reduce?Math.abs(i-active)*90:0)+'ms'}
+  requestAnimationFrame(function(){layout(false);setTimeout(function(){for(var i=0;i<cs.length;i++)cs[i].style.transitionDelay=''},1200)});
+  first=false;
+}
+function go(i,user){
+  active=Math.max(0,Math.min(view.length-1,i));
+  if(user)lastTouch=Date.now();
+  layout(false);
+}
 
-    function setTheme(theme) {
-      root.dataset.theme = theme;
+/* ====== کشیدن / سوایپ ====== */
+stage.addEventListener('pointerdown',function(e){
+  if(e.pointerType==='mouse'&&e.button!==0)return;
+  drag={x:e.clientX,id:e.pointerId,moved:false,target:e.target};lastTouch=Date.now();
+});
+stage.addEventListener('pointermove',function(e){
+  if(!drag)return;
+  var d=e.clientX-drag.x;
+  if(!drag.moved&&Math.abs(d)>6){drag.moved=true;stage.classList.add('is-drag');try{stage.setPointerCapture(drag.id)}catch(_){}}
+  if(drag.moved){dx=d;layout(false)}
+});
+function endDrag(e,cancel){
+  if(!drag)return;
+  var step=stage.children[0]?stage.children[0].offsetWidth*.6:1,moved=drag.moved,t=drag.target,d=dx;
+  drag=null;dx=0;stage.classList.remove('is-drag');lastTouch=Date.now();
+  if(moved){
+    if(!cancel&&Math.abs(d)>40){active=Math.max(0,Math.min(view.length-1,active+(d>0?1:-1)*Math.max(1,Math.round(Math.abs(d)/step))))}
+    layout(false);
+  }else if(!cancel){
+    var card=t.closest&&t.closest('.pg-card');
+    if(card){go(Array.prototype.indexOf.call(stage.children,card),true);openPop()}
+  }
+}
+stage.addEventListener('pointerup',function(e){endDrag(e,false)});
+stage.addEventListener('pointercancel',function(e){endDrag(e,true)});
+stage.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')hover=true});
+stage.addEventListener('pointerleave',function(){hover=false});
 
-      const dark = theme === "dark";
+prevB.addEventListener('click',function(){go(active-1,true)});
+nextB.addEventListener('click',function(){go(active+1,true)});
+dotsEl.addEventListener('click',function(e){var b=e.target.closest('.pg-dot');if(b)go(+b.dataset.i,true)});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&popOpen){closePop();return}
+  if(popOpen||document.activeElement===$('pgSearch'))return;
+  if(e.key==='ArrowLeft')go(active+1,true);   /* بعدی در سمت چپ است (راست‌به‌چپ) */
+  if(e.key==='ArrowRight')go(active-1,true);
+});
 
-      themeIcon.innerHTML = dark ? sunIcon : moonIcon;
+/* ====== چرخش خودکار؛ با تعامل کاربر متوقف می‌شود ====== */
+setInterval(function(){
+  if(reduce||document.hidden||popOpen||hover||drag||view.length<2)return;
+  if($('pgSearch').value||Date.now()-lastTouch<6000)return;
+  go(active>=view.length-1?0:active+1,false);
+},3800);
 
-      themeToggle.setAttribute(
-        "aria-label",
-        dark ? "فعال کردن تم روشن" : "فعال کردن تم تاریک"
-      );
+/* ====== جست‌وجو ====== */
+$('pgSearch').addEventListener('input',function(e){
+  var q=norm(e.target.value);
+  view=q?students.filter(function(s){return norm(s.name).indexOf(q)>-1}):students.slice();
+  active=0;build();show();
+});
 
-      themeToggle.title = dark
-        ? "تغییر به تم روشن"
-        : "تغییر به تم تاریک";
+/* ====== پنجره کوچک ====== */
+var pop=$('pgPop');
+function openPop(){popOpen=true;pop.classList.add('is-open');pop.setAttribute('aria-hidden','false');setTimeout(function(){$('pgPopClose').focus({preventScroll:true})},60)}
+function closePop(){popOpen=false;pop.classList.remove('is-open');pop.setAttribute('aria-hidden','true');lastTouch=Date.now()}
+pop.addEventListener('click',function(e){if(e.target===pop)closePop()});
+$('pgPopClose').addEventListener('click',closePop);
 
-      themeMeta.content = dark ? "#10121a" : "#ffffff";
+/* ====== تم روشن/تاریک ====== */
+var root=document.documentElement,btn=$('pgTheme');
+function applyTheme(t){
+  root.dataset.theme=t;
+  $('pgMeta').content=t==='dark'?'#080C1A':'#EDF0F6';
+  btn.setAttribute('aria-label',t==='dark'?'تغییر به حالت روشن':'تغییر به حالت تاریک');
+}
+applyTheme(root.dataset.theme);
+btn.addEventListener('click',function(){
+  var next=root.dataset.theme==='dark'?'light':'dark';
+  try{localStorage.setItem('pg-theme',next)}catch(_){}
+  if(reduce){applyTheme(next);return}
+  if(!document.startViewTransition){ /* جایگزین: محو نرم رنگ‌ها */
+    root.classList.add('pg-fade');applyTheme(next);setTimeout(function(){root.classList.remove('pg-fade')},500);return;
+  }
+  var r=btn.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2,
+      R=Math.hypot(Math.max(x,innerWidth-x),Math.max(y,innerHeight-y));
+  var vt=document.startViewTransition(function(){applyTheme(next)});
+  vt.ready.then(function(){
+    root.animate({clipPath:['circle(0px at '+x+'px '+y+'px)','circle('+R+'px at '+x+'px '+y+'px)']},
+      {duration:650,easing:'cubic-bezier(.4,0,.2,1)',pseudoElement:'::view-transition-new(root)'});
+  }).catch(function(){});
+});
 
-      try {
-        localStorage.setItem("payam-ghadir-theme", theme);
-      } catch (error) {
-        // تغییر تم در همین بازدید همچنان کار می‌کند.
-      }
-    }
-
-    // انتخاب تم قبل از نمایش محتوای اصلی اعمال می‌شود.
-    setTheme(readTheme());
-
-    themeToggle.addEventListener("click", () => {
-      const nextTheme =
-        root.dataset.theme === "dark" ? "light" : "dark";
-
-      setTheme(nextTheme);
-    });
-
-    function createStudentCard(student, index) {
-      const card = document.createElement("article");
-      card.className = "student-card";
-      card.style.animationDelay = `${Math.min(index * 60, 300)}ms`;
-
-      const photoWrap = document.createElement("div");
-      photoWrap.className = "student-photo-wrap";
-
-      const photo = document.createElement("img");
-      photo.className = "student-photo";
-      photo.alt = `عکس ${student.name}`;
-      photo.loading = "lazy";
-      photo.decoding = "async";
-
-      if (student.photo) {
-        photo.src = student.photo;
-
-        photo.addEventListener("error", () => {
-          photo.hidden = true;
-        }, { once: true });
-      } else {
-        photo.hidden = true;
-      }
-
-      const rank = document.createElement("span");
-      rank.className = "student-rank";
-      rank.textContent = `رتبه ${student.rank}`;
-
-      photoWrap.append(photo, rank);
-
-      const info = document.createElement("div");
-      info.className = "student-info";
-
-      const name = document.createElement("h3");
-      name.className = "student-name";
-      name.textContent = student.name;
-
-      info.appendChild(name);
-
-      if (student.average !== undefined && student.average !== "") {
-        const average = document.createElement("div");
-        average.className = "student-average";
-
-        const label = document.createElement("span");
-        label.textContent = "معدل";
-
-        const value = document.createElement("strong");
-        value.textContent = String(student.average);
-
-        average.append(label, value);
-        info.appendChild(average);
-      }
-
-      card.append(photoWrap, info);
-      return card;
-    }
-
-    function renderStudents(query = "") {
-      const hasStudents = students.length > 0;
-
-      emptyState.hidden = hasStudents;
-      searchArea.hidden = !hasStudents;
-      studentsGrid.replaceChildren();
-
-      if (!hasStudents) return;
-
-      const normalized = query.trim().toLocaleLowerCase("fa");
-
-      const filtered = students
-        .filter(student =>
-          String(student.name || "")
-            .toLocaleLowerCase("fa")
-            .includes(normalized)
-        )
-        .sort((a, b) => Number(a.rank) - Number(b.rank));
-
-      if (filtered.length === 0) {
-        const message = document.createElement("div");
-        message.className = "no-results";
-        message.textContent = "دانش‌آموزی با این نام پیدا نشد.";
-        studentsGrid.appendChild(message);
-        return;
-      }
-
-      filtered.forEach((student, index) => {
-        studentsGrid.appendChild(createStudentCard(student, index));
-      });
-    }
-
-    searchInput.addEventListener("input", event => {
-      renderStudents(event.target.value);
-    });
-
-    renderStudents();
-  </script>
+/* ====== شروع ====== */
+build();
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){show()});
+addEventListener('resize',function(){layout(false)});
+addEventListener('orientationchange',function(){setTimeout(function(){layout(false)},250)});
+})();
+</script>
 </body>
 </html>
